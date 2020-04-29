@@ -1,0 +1,25 @@
+from backend.blockchain.block import Block
+
+class Blockchain:
+    """
+    Blockchain: A public ledger of blocks
+    Impl: A list of blocks; data sets of transactions
+    """
+
+    def __init__(self):
+        self.chain = [Block.genesis()]
+
+    def __repr__(self):
+        return f'Blockchain: {self.chain}'
+
+    def add_block(self, data):
+        last_block = self.chain[-1]
+        self.chain.append(Block.mine_block(last_block, data))
+
+
+if __name__ == '__main__':
+    blockchain = Blockchain()
+
+    blockchain.add_block('one')
+    blockchain.add_block('two')
+    print(blockchain.chain[2])
