@@ -33,6 +33,10 @@ class Block:
             f'hash: {self.hash}'
         )
 
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
     @staticmethod
     def mine_block(last_block, data):
         """
@@ -77,8 +81,44 @@ class Block:
 
         return last_block.difficulty - 1 if last_block.difficulty - 1 > 0 else 1
 
+    @staticmethod
+    def is_valid_block(last_block, block):
+        """
+        Enforce the following rules:
+        Block must have proper last_block reference
+        Block must meet the proof of work requirement
+        Block difficulty must only adjust by 1 in either direction
+        Block hash must be a valid combination
+        """
+
+        if block.last_hash != last_block.hash:
+            raise Exception('The block last_hash must be correct')
+        if hex_to_binary(block.hash)[0:block.difficulty] != '0' * block.difficulty:
+            raise Exception('The proof of work requirement was not met')
+        if abs(last_block.difficulty - block.difficulty) > 1:
+            raise Exception('The block difficulty is not within 1')
+
+        reconstructed_hash = crypto_hash(
+            block.timestamp,
+            block.last_hash,
+            block.data,
+            block.nonce,
+            block.difficulty
+        )
+
+        if block.hash != reconstructed_hash:
+            raise Exception('The block hash must be correct')
+
+
 if __name__ == '__main__':
-    print('Block execution')
+    # print('Block execution')
+    # genesis_block = Block.genesis()
+    # block = Block.mine_block(genesis_block, 'foobar')
+    # print(block)
     genesis_block = Block.genesis()
-    block = Block.mine_block(genesis_block, 'foobar')
-    print(block)
+    bad_block = Block.mine_block(genesis_block, 'foo')
+    bad_block.last_hash = 'evil_data'
+    try:
+        Block.is_valid_block(genesis_block, bad_block)
+    except Exception as e:
+        print(f'is_valid_block: {e}')
