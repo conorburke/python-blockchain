@@ -20,3 +20,12 @@ python -m path.to.module
 python -m pytest backend/tests
 ```
 
+## Start the API
+```
+python -m backend.app
+```
+
+## Run a Peer Instance
+```
+export PEER=True && python -m backend.app
+```

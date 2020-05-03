@@ -8,3 +8,6 @@ pgmpy==0.1.9
 open3d-python==0.7.0.0
 ipywidgets==7.5.0
 pytest>=5.2
+Flask==1.1.1
+pubnub==4.1.6
+requests==2.22.0
