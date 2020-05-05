@@ -50,7 +50,7 @@ class Block:
     def mine_block(last_block, data):
         """
         Mines a block based on last block and new input (data).
-        Mine until block hash is foudn that meets the Proof of Work requirement
+        Mine until block hash is found that meets the Proof of Work requirement
 
         returns a Block
         """
