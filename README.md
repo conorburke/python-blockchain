@@ -29,3 +29,13 @@ python -m backend.app
 ```
 export PEER=True && python -m backend.app
 ```
+
+## Run the Frontend
+```
+npm run start
+```
+
+## Seed the Backend
+```
+export PEER=TRUE && python -m backend.app
+```
